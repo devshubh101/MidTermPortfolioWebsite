@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Career Compass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F7F2; --text:#16241F; --muted:#4B5C54; --primary:#146356; --primary-light:#1F8A76;
+  --accent:#C97A1A; --border:#D9E2DB; --card:#FFFFFF; --chip:#EAF0EA;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --bg:#0F1613; --text:#E9F1EC; --muted:#9FB3A9; --primary:#4FBCA6; --primary-light:#6FD1BC; --accent:#E7A64B; --border:#233530; --card:#162622; --chip:#1C2E28; }
+}
+:root[data-theme="dark"]{ --bg:#0F1613; --text:#E9F1EC; --muted:#9FB3A9; --primary:#4FBCA6; --primary-light:#6FD1BC; --accent:#E7A64B; --border:#233530; --card:#162622; --chip:#1C2E28; }
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.5}
+h1,h2,h3,.brand{font-family:'Space Grotesk',system-ui,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px calc(60px + env(safe-area-inset-bottom,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;margin-bottom:28px}
+.brand span.dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+h1{font-size:30px;font-weight:700;margin:0 0 10px;line-height:1.15}
+.lede{color:var(--muted);font-size:16px;margin:0 0 28px;max-width:60ch}
+.chipgrid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.chip{border:1.5px solid var(--border);background:var(--chip);color:var(--text);border-radius:100px;padding:10px 16px;font-size:14.5px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:7px;transition:border-color .15s,background .15s}
+.chip.active{border-color:var(--primary);background:var(--primary);color:#fff}
+.hint{color:var(--muted);font-size:13.5px;margin:0 0 20px}
+.btn{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:14px 22px;font-size:15.5px;font-weight:600;font-family:inherit;cursor:pointer}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--primary);border:1.5px solid var(--primary);padding:10px 18px;font-size:14px}
+.btn.small{padding:8px 14px;font-size:13.5px;border-radius:8px}
+.resume{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:26px}
+.resume h3{margin:0 0 10px;font-size:15px}
+.rlink{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border);font-size:14.5px}
+.rlink:first-of-type{border-top:none}
+.rlink button{background:none;border:none;color:var(--primary);font-family:inherit;font-weight:600;cursor:pointer;font-size:14px}
+.bar{height:6px;background:var(--border);border-radius:100px;flex:1;margin:0 12px;overflow:hidden}
+.bar>div{height:100%;background:var(--primary)}
+.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.topline .back{color:var(--muted);background:none;border:none;font-family:inherit;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.count{color:var(--muted);font-size:14px;margin-bottom:18px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:18px 20px;margin-bottom:14px;border-left:4px solid var(--strength,var(--border))}
+.card .head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.card .emoji{font-size:24px}
+.card h3{margin:0;font-size:18px}
+.badge{font-size:12px;font-weight:600;color:var(--strength,var(--muted));margin-left:auto;white-space:nowrap}
+.card ul{margin:0 0 14px;padding-left:18px;color:var(--muted);font-size:14.5px}
+.card ul li{margin-bottom:3px}
+.detail h1{margin-bottom:4px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:26px}
+.block{margin-bottom:26px}
+.block h2{font-size:16px;margin:0 0 10px}
+.block p{margin:0;font-size:15px;color:var(--text)}
+.block ul{margin:0;padding-left:18px;font-size:15px}
+.block ul li{margin-bottom:5px}
+.step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--border)}
+.step:first-child{border-top:none}
+.step input{margin-top:4px;width:17px;height:17px;accent-color:var(--primary);flex-shrink:0}
+.step label{font-size:15px;cursor:pointer}
+.step.done label{color:var(--muted);text-decoration:line-through}
+.progresswrap{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.progresswrap span{font-size:13.5px;color:var(--muted);white-space:nowrap}
+.reslist{display:flex;flex-direction:column;gap:8px}
+.reslist a{color:var(--primary);text-decoration:none;font-size:14.5px;font-weight:500;border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:block}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
+.actions{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const INTERESTS=[
+{k:'tech',l:'Technology & Coding',e:'💻'},{k:'art',l:'Art & Design',e:'🎨'},
+{k:'science',l:'Science & Research',e:'🔬'},{k:'business',l:'Business & Entrepreneurship',e:'💼'},
+{k:'helping',l:'Healthcare & Helping People',e:'❤️'},{k:'writing',l:'Writing & Storytelling',e:'✍️'},
+{k:'music',l:'Music & Performance',e:'🎵'},{k:'sports',l:'Sports & Fitness',e:'🏋️'},
+{k:'building',l:'Building & Engineering',e:'🏗️'},{k:'nature',l:'Nature & Animals',e:'🌿'},
+{k:'law',l:'Law & Justice',e:'⚖️'},{k:'numbers',l:'Numbers & Finance',e:'📊'},
+{k:'teaching',l:'Teaching & Mentoring',e:'📚'},{k:'gaming',l:'Gaming',e:'🎮'},
+{k:'fashion',l:'Fashion & Style',e:'👗'},{k:'cooking',l:'Cooking & Food',e:'🍳'},
+{k:'environment',l:'Environment & Sustainability',e:'🌍'},{k:'social',l:'Social Media & Content',e:'📱'},
+{k:'psychology',l:'Psychology & Behavior',e:'🧠'},{k:'travel',l:'Travel & Languages',e:'✈️'}
+];
+const CAREERS=[
+{id:'dev',e:'💻',t:'Software Developer',tg:['tech','numbers','building'],
+p:["You solve puzzles for a living","High demand, remote-friendly","Tons of free resources to start"],
+o:"One of the fastest-growing fields. AI is changing the tools, not the need for people who can build with them.",
+m:"Entry-level often $50k–$70k; experienced developers frequently pass $100k. Varies a lot by location.",
+s:["Learn Python or JavaScript free online","Build 2–3 small projects for a portfolio","Try a CS degree, bootcamp, or self-teaching","Land an internship or junior role","Pick a specialty: web, mobile, AI, or games"]},
+{id:'game',e:'🎮',t:'Game Designer',tg:['tech','gaming','art'],
+p:["Mix of storytelling, art, and code","Work on things people play for fun","Indie path is more open than ever"],
+o:"Mobile and indie games keep the industry growing, even though studio jobs are competitive.",
+m:"Entry roles $45k–$65k; senior designers at larger studios often exceed $90k.",
+s:["Play games critically, note what works","Try free tools: Unity, Unreal, or Godot","Make small games and finish them","Join a game jam for practice","Build a portfolio and apply, or go indie"]},
+{id:'ux',e:'🖥️',t:'UX/UI Designer',tg:['art','tech','psychology'],
+p:["Blends psychology with visual design","Shapes how people use technology","Needed at nearly every tech company"],
+o:"Growing as companies invest in digital products; good design judgment stays valuable even as tools speed up.",
+m:"Entry-level $50k–$70k; senior designers often reach $90k–$120k.",
+s:["Learn the basics of Figma","Study why some apps feel easy to use","Redesign an app you use as practice","Build a small portfolio of 3–4 projects","Apply for internships or junior roles"]},
+{id:'data',e:'📊',t:'Data Scientist',tg:['tech','numbers','science'],
+p:["Turns numbers into real decisions","Works across sports, health, business, more","Strong long-term demand"],
+o:"Demand keeps rising as more companies rely on data to make decisions.",
+m:"Entry-level $60k–$80k; experienced data scientists often pass $110k.",
+s:["Get comfortable with basic statistics","Learn Python and SQL","Try small projects with real datasets","Consider a degree in stats, math, or CS","Build a portfolio you can show employers"]},
+{id:'doctor',e:'🩺',t:'Doctor',tg:['helping','science'],
+p:["Directly improves people's health","Respected, stable career","Many specialties to choose later"],
+o:"Consistently high demand worldwide; the training path is long but job security is strong.",
+m:"High long-term earning potential (often $200k+), after a long and costly training path.",
+s:["Take science classes seriously now","Volunteer or shadow in a clinic","Bachelor's degree with pre-med courses","Medical school, then residency","Choose a specialty that fits you"]},
+{id:'nurse',e:'💉',t:'Nurse',tg:['helping','science'],
+p:["Hands-on patient care","Faster path than medical school","Huge demand almost everywhere"],
+o:"One of the most in-demand healthcare roles worldwide, and expected to stay that way.",
+m:"Entry-level $55k–$70k; specialized nurses often earn $90k+.",
+s:["Build a strong base in science classes","Volunteer at a hospital or clinic","Nursing degree (ADN or BSN)","Pass the licensing exam (NCLEX)","Specialize later: ER, pediatrics, etc."]},
+{id:'psych',e:'🧠',t:'Psychologist / Counselor',tg:['helping','psychology'],
+p:["Helps people understand their minds","Rising awareness of mental health needs","Flexible work settings"],
+o:"Growing attention to mental health is increasing demand for counselors and psychologists.",
+m:"Entry counseling roles $45k–$60k; licensed psychologists often $80k–$100k+.",
+s:["Learn the basics of psychology","Practice active listening in daily life","Bachelor's degree in psychology","Master's or PhD for licensure","Pick a focus: school, clinical, sports, etc."]},
+{id:'teacher',e:'📚',t:'Teacher',tg:['teaching','helping'],
+p:["Shapes the next generation","Every subject and age needs teachers","Clear, stable path to start"],
+o:"Steady demand overall, especially in STEM subjects and special education.",
+m:"Entry-level often $40k–$50k; varies a lot by location and experience.",
+s:["Tutor or mentor younger students now","Pick a subject you genuinely love","Bachelor's degree plus teaching certification","Complete student teaching","Apply for your first classroom role"]},
+{id:'entrepreneur',e:'🚀',t:'Entrepreneur',tg:['business','numbers'],
+p:["Build something that's entirely yours","Combine several interests into one thing","Upside is uncapped, but so is risk"],
+o:"Starting something is more accessible than ever online, though most ventures take years to pay off.",
+m:"Highly variable, from $0 to unlimited. Most new businesses take time to become profitable.",
+s:["Start a tiny project or side hustle now","Learn basic budgeting and pricing","Find a real problem to solve for people","Launch small and get honest feedback","Reinvest and grow gradually"]},
+{id:'marketing',e:'📣',t:'Marketing / Social Media Manager',tg:['social','business','writing'],
+p:["Turns creativity into strategy","Fast-growing as business moves online","Works for a brand or for yourself"],
+o:"Digital marketing keeps expanding as more of business and culture moves online.",
+m:"Entry-level $40k–$55k; senior marketers often reach $80k–$100k+.",
+s:["Grow a social account around a real topic","Study what makes posts perform","Learn a basic analytics tool","Intern with a brand or small business","Specialize: content, ads, or strategy"]},
+{id:'creator',e:'🎥',t:'Content Creator',tg:['social','art','writing'],
+p:["Direct connection with an audience","Multiple income paths (ads, sponsors, products)","Fully self-directed work"],
+o:"A real, growing career path, though it's competitive and income can be unpredictable at first.",
+m:"Highly variable — many earn little early on; top creators earn well into six figures.",
+s:["Pick a niche you'd enjoy for years","Post consistently and study your analytics","Learn basic editing tools","Build a small, loyal audience first","Diversify income beyond one platform"]},
+{id:'journalist',e:'📰',t:'Journalist / Writer',tg:['writing','social'],
+p:["Tells true stories that matter","Works across news, magazines, or online media","Writing skill transfers everywhere"],
+o:"Traditional journalism has shrunk, but digital and niche media are growing.",
+m:"Entry-level $35k–$50k; experienced writers and editors $60k–$90k+.",
+s:["Write constantly — a blog or school paper","Read widely in styles you admire","Study journalism, English, or communications","Intern at a publication","Build a portfolio of published work"]},
+{id:'engineer',e:'🏗️',t:'Civil / Mechanical Engineer',tg:['building','science','numbers'],
+p:["Designs things that shape the real world","Strong, steady demand","Clear step-by-step career ladder"],
+o:"Steady demand tied to construction, infrastructure, and manufacturing.",
+m:"Entry-level $60k–$75k; experienced engineers often pass $100k.",
+s:["Focus hard on math and physics now","Try a robotics or building club","Engineering degree (accredited program)","Complete an internship","Get licensed (PE) as you advance"]},
+{id:'architect',e:'🏛️',t:'Architect',tg:['building','art'],
+p:["Blends creativity with technical skill","See your designs become real buildings","Long-lasting, visible impact"],
+o:"Demand tracks construction and urban growth; licensing takes years but the path is well-defined.",
+m:"Entry-level $50k–$65k; licensed architects often exceed $90k.",
+s:["Sketch and study buildings you admire","Try design software like SketchUp","Architecture degree (usually 5 years)","Complete required internship hours","Pass the licensing exam"]},
+{id:'lawyer',e:'⚖️',t:'Lawyer',tg:['law','writing'],
+p:["Advocates for people or causes","Huge range of specialties","Intellectually demanding, argument-driven work"],
+o:"Steady demand overall; competitive at top firms, but many paths exist beyond courtroom law.",
+m:"Entry-level $60k–$90k (varies widely); experienced lawyers often exceed $150k.",
+s:["Join debate club, practice structured arguing","Bachelor's degree in any major","Take the LSAT","Law school (about 3 years)","Pass the bar exam"]},
+{id:'envsci',e:'🌍',t:'Environmental Scientist',tg:['nature','environment','science'],
+p:["Works on real climate solutions","Mix of outdoor and lab/research work","Growing field with real impact"],
+o:"Rising demand as climate and sustainability issues get more attention worldwide.",
+m:"Entry-level $45k–$60k; experienced scientists often reach $80k–$95k.",
+s:["Get involved in local environmental projects","Take science and environmental classes","Environmental science degree","Intern with a conservation org or agency","Specialize: climate, wildlife, or policy"]},
+{id:'vet',e:'🐾',t:'Veterinarian',tg:['nature','helping','science'],
+p:["Cares for animals full-time","Deep bond-based, hands-on work","Several specialties to choose from"],
+o:"Steady, strong demand, especially for companion-animal care.",
+m:"Entry-level $70k–$90k; experienced vets often reach $100k–$130k.",
+s:["Volunteer at a shelter or clinic","Excel in science classes","Bachelor's degree with pre-vet courses","Veterinary school (about 4 years)","Choose a specialty later"]},
+{id:'musician',e:'🎵',t:'Musician / Producer',tg:['music','art'],
+p:["Turns a passion for sound into work","Multiple paths: perform, produce, teach","Real creative freedom"],
+o:"Streaming changed how artists earn, but teaching, producing, and session work remain steady paths.",
+m:"Highly variable — many combine performing, teaching, and production for stable income.",
+s:["Practice your instrument or production daily","Share finished work online consistently","Collaborate with other musicians","Consider music school or self-teaching","Diversify income: gigs, teaching, licensing"]},
+{id:'trainer',e:'💪',t:'Personal Trainer / Coach',tg:['sports','helping','business'],
+p:["Turns fitness knowledge into helping others","Flexible: gyms, teams, or online","You can build your own client base"],
+o:"Growing interest in health and fitness keeps demand steady, especially for online coaching.",
+m:"Entry-level $35k–$50k; established trainers and coaches often reach $60k–$90k+.",
+s:["Get seriously fit and learn the 'why'","Get certified (e.g. NASM, ACE)","Train friends or family for practice","Build a small client base","Specialize: sport-specific, nutrition, or online"]},
+{id:'chef',e:'🍳',t:'Chef',tg:['cooking','art','business'],
+p:["Turns a love of food into a craft","Many paths: restaurants, private, or your own concept","Hands-on and creative every day"],
+o:"Steady demand though hours are tough; food entrepreneurship (catering, trucks) is growing.",
+m:"Entry-level $30k–$45k; head chefs or owners often reach $60k–$100k+.",
+s:["Cook constantly and study technique","Take any kitchen job to learn fast","Culinary school or an apprenticeship","Work your way up through stations","Specialize or open your own concept"]},
+{id:'fashion',e:'👗',t:'Fashion Designer',tg:['fashion','art','business'],
+p:["Turns creativity into wearable products","Independent brands are more possible than ever","Growing sustainable/indie fashion scene"],
+o:"Competitive, but going independent online has opened doors the old system didn't have.",
+m:"Highly variable — entry roles $35k–$50k; successful designers or brand owners can earn far more.",
+s:["Sketch and study fashion constantly","Learn to sew and understand fabric","Fashion program or self-teaching","Build one small collection","Sell online or intern with a brand"]}
+];
+let selected=new Set();
+let view='home';
+let activeId=null;
+
+function loadProgress(){ try{ return JSON.parse(localStorage.getItem('ccProgress')||'{}'); }catch(e){ return {}; } }
+function saveProgress(p){ try{ localStorage.setItem('ccProgress',JSON.stringify(p)); }catch(e){} }
+function pct(id){ const p=loadProgress()[id]; const c=CAREERS.find(c=>c.id===id); if(!p||!c) return 0; const done=p.filter(Boolean).length; return Math.round(done/c.s.length*100); }
+
+function toggleInterest(k){ selected.has(k)?selected.delete(k):selected.add(k); render(); }
+function goHome(){ view='home'; render(); }
+function showResults(){ if(selected.size<2) return; view='results'; render(); }
+function showDetail(id){ activeId=id; view='detail'; render(); window.scrollTo(0,0); }
+function toggleStep(id,idx){
+  const all=loadProgress(); const c=CAREERS.find(c=>c.id===id);
+  const arr=all[id]||new Array(c.s.length).fill(false);
+  arr[idx]=!arr[idx]; all[id]=arr; saveProgress(all); render();
+}
+
+function matches(){
+  return CAREERS.map(c=>({c,score:c.tg.filter(t=>selected.has(t)).length}))
+    .filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.c.t.localeCompare(b.c.t));
+}
+function strengthColor(score){ return score>=3?'var(--primary)':score===2?'var(--accent)':'var(--muted)'; }
+function strengthLabel(score){ return score>=3?'Strong match':score===2?'Good match':'Worth exploring'; }
+
+function renderHome(){
+  const prog=loadProgress();
+  const saved=Object.keys(prog).map(id=>({id,pct:pct(id),c:CAREERS.find(c=>c.id===id)})).filter(x=>x.c&&x.pct>0);
+  let html=`<div class="brand"><span class="dot"></span>Career Compass</div>
+  <h1>Figure out where you're headed.</h1>
+  <p class="lede">Pick a few things you're into. We'll suggest real career paths, what they actually pay, and a step-by-step roadmap to get there.</p>`;
+  if(saved.length){
+    html+=`<div class="resume"><h3>Continue where you left off</h3>`;
+    saved.forEach(s=>{ html+=`<div class="rlink"><span>${s.c.e} ${s.c.t}</span><div class="bar"><div style="width:${s.pct}%"></div></div><button onclick="showDetail('${s.id}')">${s.pct}%</button></div>`; });
+    html+=`</div>`;
+  }
+  html+=`<div class="chipgrid">${INTERESTS.map(i=>`<button class="chip ${selected.has(i.k)?'active':''}" onclick="toggleInterest('${i.k}')">${i.e} ${i.l}</button>`).join('')}</div>
+  <p class="hint">${selected.size<2?'Pick at least 2 to get better matches.':selected.size+' selected.'}</p>
+  <button class="btn" ${selected.size<2?'disabled':''} onclick="showResults()">Find my paths</button>`;
+  return html;
+}
+
+function renderResults(){
+  const m=matches();
+  let html=`<div class="topline"><button class="back" onclick="goHome()">← Change interests</button></div>
+  <h1>${m.length} path${m.length===1?'':'s'} worth a look</h1>
+  <p class="count">Based on: ${[...selected].map(k=>INTERESTS.find(i=>i.k===k).l).join(', ')}</p>`;
+  if(!m.length){ html+=`<p>No close matches yet — try selecting a couple more interests.</p>`; }
+  m.forEach(({c,score})=>{
+    html+=`<div class="card" style="--strength:${strengthColor(score)}">
+      <div class="head"><span class="emoji">${c.e}</span><h3>${c.t}</h3><span class="badge">${strengthLabel(score)}</span></div>
+      <ul>${c.p.map(x=>`<li>${x}</li>`).join('')}</ul>
+      <button class="btn small" onclick="showDetail('${c.id}')">See full roadmap</button>
+    </div>`;
+  });
+  return html;
+}
+
+function renderDetail(){
+  const c=CAREERS.find(c=>c.id===activeId);
+  const prog=loadProgress()[c.id]||new Array(c.s.length).fill(false);
+  const p=pct(c.id);
+  const q=encodeURIComponent(c.t);
+  let html=`<div class="topline"><button class="back" onclick="showResults()">← Back to results</button></div>
+  <div class="detail">
+  <h1>${c.e} ${c.t}</h1>
+  <p class="sub">${c.o}</p>
+  <div class="block"><h2>Why this could be you</h2><ul>${c.p.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  <div class="block"><h2>What it can pay</h2><p>${c.m}</p></div>
+  <div class="block">
+    <h2>Your roadmap</h2>
+    <div class="progresswrap"><div class="bar"><div style="width:${p}%"></div></div><span>${p}% done</span></div>
+    ${c.s.map((step,i)=>`<div class="step ${prog[i]?'done':''}"><input type="checkbox" id="s${i}" ${prog[i]?'checked':''} onchange="toggleStep('${c.id}',${i})"><label for="s${i}">${step}</label></div>`).join('')}
+  </div>
+  <div class="block">
+    <h2>Go deeper</h2>
+    <div class="reslist">
+      <a href="https://www.onetonline.org/find/quick?s=${q}" target="_blank" rel="noopener">O*NET — detailed job profile & outlook</a>
+      <a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener">Bureau of Labor Statistics — Occupational Outlook Handbook</a>
+      <a href="https://www.youtube.com/results?search_query=${encodeURIComponent('day in the life '+c.t)}" target="_blank" rel="noopener">YouTube — "day in the life" videos</a>
+      <a href="https://www.coursera.org/search?query=${q}" target="_blank" rel="noopener">Coursera — courses to try the field</a>
+      <a href="https://www.khanacademy.org" target="_blank" rel="noopener">Khan Academy — free foundational learning</a>
+    </div>
+    <p class="note">Pay figures and sites are U.S.-focused — search "${c.t} salary" plus your country for local numbers.</p>
+  </div>
+  <div class="actions"><button class="btn ghost" onclick="showResults()">Back to results</button><button class="btn ghost" onclick="goHome()">Explore other interests</button></div>
+  </div>`;
+  return html;
+}
+
+function render(){
+  const app=document.getElementById('app');
+  app.innerHTML = view==='home'?renderHome():view==='results'?renderResults():renderDetail();
+}
+render();
+</script>
+</body>
+</html>
